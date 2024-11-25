@@ -2,10 +2,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 10px 0; /* Adds space around the container */
 }
 
 .task-input {
   margin: 5px;
+  padding: 8px; /* Adds internal spacing */
+  border: 1px solid #ccc; /* Light border for better definition */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Improves readability */
 }
 
 .tasks-container {
@@ -21,6 +26,8 @@
 .task-header {
   font-weight: 600;
   margin: 5px;
+  font-size: 18px; /* Enhances emphasis on the header */
+  color: #333; /* A darker color for better contrast */
 }
 
 .delete-button {
@@ -28,6 +35,13 @@
   border: none;
   background-color: transparent;
   cursor: pointer;
+  font-size: 16px; /* Matches button size with input fields */
+  padding: 5px; /* Adds clickable area */
+  transition: transform 0.2s ease-in-out; /* Smooth hover effect */
+}
+
+.delete-button:hover {
+  transform: scale(1.1); /* Slightly enlarges the button on hover */
 }
 
 .edit-button {
@@ -35,4 +49,11 @@
   border: none;
   background-color: transparent;
   cursor: pointer;
+  font-size: 16px; /* Matches button size with input fields */
+  padding: 5px; /* Adds clickable area */
+  transition: transform 0.2s ease-in-out; /* Smooth hover effect */
+}
+
+.edit-button:hover {
+  transform: scale(1.1); /* Slightly enlarges the button on hover */
 }

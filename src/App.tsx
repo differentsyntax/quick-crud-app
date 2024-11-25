@@ -49,7 +49,7 @@ const App = () => {
             onChange={handleChange}
             value={task.title}
             name="title"
-            placeholder={`${task.title}`}
+            placeholder={task.title ? task.title : "Title"}
             className="task-input"
           />
           <input
@@ -58,7 +58,7 @@ const App = () => {
             name="task"
             onChange={handleChange}
             value={task.task}
-            placeholder={`${task.task}`}
+            placeholder={task.task ? task.task : "Task"}
             className="task-input"
           />
 

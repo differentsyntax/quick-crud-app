@@ -1,6 +1,7 @@
 table {
   border: 1px solid #ddd;
-  justify-content: center;
+  border-collapse: collapse; /* Ensures borders are cleanly merged */
+  margin: 0 auto; /* Centers the table */
   width: 100%;
 }
 
@@ -9,8 +10,10 @@ td {
   border-right: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   text-align: center;
+  padding: 8px; /* Adds spacing inside cells */
 }
 
 th {
   font-weight: 600;
+  background-color: #f9f9f9; /* Light background for headers */
 }

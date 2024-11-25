@@ -5,4 +5,5 @@ npm install
 npm run dev
 ```
 
-<img width="501" alt="Screenshot 2024-11-13 at 7 15 53 PM" src="https://github.com/user-attachments/assets/8a760b16-1eff-4b75-9789-05e4605b86d1">
+
+<img width="1420" alt="Screenshot 2024-11-24 at 11 02 20 PM" src="https://github.com/user-attachments/assets/18e0af1e-a676-436d-afe1-c1d73768610b">

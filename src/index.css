@@ -1,3 +1,16 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+table {
+  border: 1px solid #ddd;
+  justify-content: center;
+  width: 100%;
+}
+
+th,
+td {
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+th {
+  font-weight: 600;
+}

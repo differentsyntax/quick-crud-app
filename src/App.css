@@ -1,0 +1,38 @@
+.add-task-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.task-input {
+  margin: 5px;
+}
+
+.tasks-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+
+.task {
+  margin: 5px;
+}
+
+.task-header {
+  font-weight: 600;
+  margin: 5px;
+}
+
+.delete-button {
+  color: red;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.edit-button {
+  color: green;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}

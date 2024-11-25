@@ -1,104 +1,114 @@
-import { ChangeEvent, useState } from "react";
-
-const items = ["bananas", "apples", "chex-mix"];
+import { ChangeEvent, FormEvent, MouseEvent, useState } from "react";
+import "./App.css";
+import { Tasks } from "./utilities";
 
 const App = () => {
-  const [itemsData, setItemsData] = useState<string[]>(items);
-  const [newItem, setNewItem] = useState<string>("");
-  const [editing, setEditing] = useState<boolean>(false);
-  const [editingItem, setEditingItem] = useState<string>("");
-  const [editedItem, setEditedItem] = useState<string>("");
+  const [tasks, setTasks] = useState<Tasks[]>([]);
+  const [task, setTask] = useState<Tasks>({});
+  const [id, setId] = useState<number>(1);
+  const [edit, setEdit] = useState<boolean>(false);
+  const [editingItem, setEditingItem] = useState<number | undefined>(0);
 
-  const handleAdd = () => {
-    if (!itemsData.includes(newItem) && newItem)
-      setItemsData((prevData) => [...prevData, newItem.trim()]);
-  };
-
-  const handleAddInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target && e.target.value) {
-      setNewItem(e.target.value);
+  const handleTaskAdd = (e: FormEvent) => {
+    e.preventDefault();
+    if (edit) {
+      setTasks((prevState) =>
+        prevState.map((item) =>
+          item.id === editingItem
+            ? { ...item, title: task.title, task: task.task }
+            : item
+        )
+      );
+    } else {
+      setTasks((prevState: Tasks[]) => [...prevState, { ...task, id: id }]);
     }
+    setId((prevState: number) => (!edit ? prevState + 1 : prevState));
+    setTask({});
+    setEdit(false);
+    setEditingItem(0);
   };
 
-  const handleDelete = (item: string) => {
-    setItemsData((prevData) => prevData.filter((x) => x != item));
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setTask((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
   };
 
-  const handleEditChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEditedItem(e.target.value);
-  };
-
-  const handleSaveEdit = () => {
-    setItemsData((prevData) =>
-      prevData.map((item) => (item == editingItem ? editedItem : item))
-    );
-    setEditing(false);
-    setEditedItem("");
+  const handleDelete = (itemId: number | undefined) => {
+    setTasks((prevState) => prevState.filter((item) => item.id !== itemId));
   };
 
   return (
-    <>
-      <div className="flex flex-col justify-center items-center min-h-screen min-w-screen">
-        <div className="flex justify-start items-center">
+    <div>
+      <form onSubmit={handleTaskAdd}>
+        <div className="add-task-container">
           <input
-            className="m-4 p-2 border border-gray-900 rounded-md"
-            placeholder="Add new item..."
-            onChange={handleAddInputChange}
+            required
+            type="text"
+            onChange={handleChange}
+            value={task.title}
+            name="title"
+            placeholder={`${task.title}`}
+            className="task-input"
+          />
+          <input
+            required
+            type="text"
+            name="task"
+            onChange={handleChange}
+            value={task.task}
+            placeholder={`${task.task}`}
+            className="task-input"
           />
 
-          <button
-            className="m-4 p-2 bg-green-500 rounded-md w-20"
-            onClick={handleAdd}
-          >
-            {"Add"}
-          </button>
+          <button type="submit">{`${edit ? "Save" : "Add"}`}</button>
         </div>
-        <ul>
-          {itemsData.map((item, index) => (
-            <li key={index}>
-              <div className="flex justify-between items-center border border-gray-900 ">
-                {editing && item == editingItem ? (
-                  <input
-                    placeholder={editingItem}
-                    onChange={handleEditChange}
-                    className="m-4 p-2 border border-gray-900 rounded-md"
-                    value={editedItem ? editedItem : editingItem}
-                  />
-                ) : (
-                  <p className="m-4 p-2 w-full">{item}</p>
-                )}
-                <div className="flex items-center justify-end w-md">
-                  {!editing || item != editingItem ? (
+      </form>
+      <div className="tasks-container">
+        <table>
+          <thead>
+            <tr>
+              <th>{`ID`}</th>
+              <th>{`Title`}</th>
+              <th>{`Task`}</th>
+              <th>{`Operations`}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tasks.map((item) => {
+              return (
+                <tr key={item.id}>
+                  <td>{item.id}</td>
+                  <td>{item.title}</td>
+                  <td>{item.task}</td>
+                  <td>
                     <button
-                      className="m-4 p-2 bg-yellow-500 rounded-md w-20"
+                      onClick={() => handleDelete(item.id)}
+                      className="delete-button"
+                    >{`X`}</button>
+                    <button
                       onClick={() => {
-                        setEditing(true);
-                        setEditingItem(item);
+                        const itemToEdit = tasks.find(
+                          (itemCurr) => itemCurr.id === item.id
+                        );
+                        if (itemToEdit) {
+                          setTask(itemToEdit);
+                          setEdit(true);
+                          setEditingItem(item.id);
+                        }
                       }}
-                    >
-                      {"Edit"}
-                    </button>
-                  ) : (
-                    <button
-                      className="m-4 p-2 bg-green-500 rounded-md w-20"
-                      onClick={handleSaveEdit}
-                    >
-                      Save
-                    </button>
-                  )}
-                  <button
-                    className="m-4 p-2 bg-red-500 rounded-md w-20"
-                    onClick={() => handleDelete(item)}
-                  >
-                    {"Delete"}
-                  </button>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
+                      className="edit-button"
+                    >{`<Edit>`}</button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
-    </>
+    </div>
   );
 };
+
 export default App;
